@@ -1,0 +1,56 @@
+#!$PREFIX/bin/bash
+
+pkg install php-apache -y
+
+if [ ! -d ~/storage ];
+then
+  termux-setup-storage
+fi
+
+sleep 5
+
+htdocs='/sdcard/htdocs'
+if [ ! -d $htdocs ];
+then
+  mkdir $htdocs
+fi
+
+pkg install apache2 -y
+
+rm -f $PREFIX/etc/apache2/httpd.conf
+
+cp httpd.conf $PREFIX/etc/apache2/
+
+rm -f $PREFIX/etc/apache2/extra/httpd-ssl.conf
+
+cp httpd-ssl.conf $PREFIX/etc/apache2/extra/
+
+pkg install openssl-tool -y
+
+openssl req -x509 -newkey rsa:2048 -keyout server.key -out server.crt -days 365 -nodes -subj '/CN=localhost'
+
+cp server.crt $PREFIX/etc/apache2/server.crt
+
+cp server.key $PREFIX/etc/apache2/server.key
+
+mkdir /sdcard/htdocs/phpinfo
+echo "<?php phpinfo(); ?>" >/sdcard/htdocs/phpinfo/index.php
+
+rm -f $PREFIX/bin/tamp
+
+chmod +x tamp
+
+cp tamp $PREFIX/bin/
+
+pkg install mariadb composer -y
+
+cd /sdcard/htdocs && composer create-project phpmyadmin/phpmyadmin
+
+cd ~/tamp && cp config.inc.php /sdcard/htdocs/phpmyadmin/config.inc.php
+
+echo "TAMP installed sucessfully."
+echo "/sdcard/htdocs - is your document directory."
+echo "Place your files in /sdcard/htdocs"
+echo "To use termux as a local web server, run: tamp start"
+
+#tamp
