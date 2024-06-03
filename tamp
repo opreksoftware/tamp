@@ -46,8 +46,14 @@ uninstall)
     read -p "Do you want to continue? (y/n) " REPLY
     if [ $REPLY = "y" ]
     then
-      pkg uninstall apache2 php openssl mariadb -y
-      cd ~/ && rm -f -rf tamp && rm -f $PREFIX/bin/tamp
+      rm $PREFIX/etc/apache2/server.crt
+      rm $PREFIX/etc/apache2/server.key
+      apt purge apache2 php openssl-tool mariadb -y
+      apt autoremove -y
+      cd ~/ && rm -rf tamp && rm $PREFIX/bin/tamp
+      echo "TAMP has been successfully uninstalled."
+    else
+      echo "Abort."
     fi
     ;;
 *)

@@ -9,19 +9,13 @@ fi
 
 sleep 5
 
-htdocs='/sdcard/htdocs'
-if [ ! -d $htdocs ];
-then
-  mkdir $htdocs
-fi
+mkdir -p /sdcard/htdocs
 
-pkg install apache2 -y
-
-rm -f $PREFIX/etc/apache2/httpd.conf
+rm $PREFIX/etc/apache2/httpd.conf
 
 cp httpd.conf $PREFIX/etc/apache2/
 
-rm -f $PREFIX/etc/apache2/extra/httpd-ssl.conf
+rm $PREFIX/etc/apache2/extra/httpd-ssl.conf
 
 cp httpd-ssl.conf $PREFIX/etc/apache2/extra/
 
@@ -29,12 +23,16 @@ pkg install openssl-tool -y
 
 openssl req -x509 -newkey rsa:2048 -keyout server.key -out server.crt -days 365 -nodes -subj '/CN=localhost'
 
-cp server.crt $PREFIX/etc/apache2/server.crt
+mv -f server.crt $PREFIX/etc/apache2/
 
-cp server.key $PREFIX/etc/apache2/server.key
+mv -f server.key $PREFIX/etc/apache2/
 
-mkdir /sdcard/htdocs/phpinfo
-echo "<?php phpinfo(); ?>" >/sdcard/htdocs/phpinfo/index.php
+php_info='/sdcard/htdocs/phpinfo'
+if [ ! -d $php_info ];
+then
+  mkdir $php_info
+  echo "<?php phpinfo(); ?>" > $php_info/index.php
+fi
 
 rm -f $PREFIX/bin/tamp
 
@@ -44,13 +42,17 @@ cp tamp $PREFIX/bin/
 
 pkg install mariadb composer -y
 
-cd /sdcard/htdocs && composer create-project phpmyadmin/phpmyadmin
+if [ ! -d /sdcard/htdocs/phpmyadmin ];
+then
+  cd /sdcard/htdocs && composer create-project phpmyadmin/phpmyadmin
+fi
 
-cd ~/tamp && cp config.inc.php /sdcard/htdocs/phpmyadmin/config.inc.php
+cd ~/tamp && cp -f config.inc.php /sdcard/htdocs/phpmyadmin/config.inc.php
 
+YELLOW='\033[0;33m'
 echo "TAMP installed sucessfully."
 echo "/sdcard/htdocs - is your document directory."
 echo "Place your files in /sdcard/htdocs"
-echo "To use termux as a local web server, run: tamp start"
+echo -e "Run: ${YELLOW}tamp start"
 
 #tamp
