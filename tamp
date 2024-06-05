@@ -38,6 +38,24 @@ stop)
     apachectl stop
     pgrep mariadb && pkill mariadb
     ;;
+update)
+    if [ ! -d ~/tamp ];
+    then
+    echo "TAMP directory not found."
+      git clone https://github.com/sekedus/tamp.git
+    fi
+    cd $HOME/tamp
+    git remote update
+    STATUS=$(git status -uno | grep 'Your branch is up to date')
+    echo "Check for TAMP updates.."
+    if [ -z "$STATUS" ]; then
+      git reset --hard HEAD
+      git pull
+      sh update
+    else
+      echo "\033[0;33mAlready up to date.\033[0m"
+    fi
+    ;;
 uninstall)
     echo "Are you absolutely sure?"
     echo ""
@@ -61,8 +79,11 @@ uninstall)
     echo "by github.com/sekedus"
     echo " "
     echo "commands:"
-    echo " start          Start tamp, localhost:8080"
-    echo " start-ssl      Start tamp with SSL, port :8443"
-    echo " stop           Stop tamp"
-    echo " uninstall      Uninstall tamp"
+    echo " start          Start TAMP, localhost:8080"
+    echo " start-ssl      Start TAMP with SSL, port :8443"
+    echo " stop           Stop TAMP"
+    echo " update         Update TAMP"
+    echo " uninstall      Uninstall TAMP"
 esac
+
+# tamp

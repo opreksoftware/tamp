@@ -53,6 +53,7 @@ cd ~/tamp && bash setup && cd ~/
 - tamp start
 - tamp start-ssl
 - tamp stop
+- tamp update
 - tamp uninstall
 
 ## Credits
