@@ -1,7 +1,5 @@
 #!$PREFIX/bin/bash
 
-pkg install php-apache -y
-
 if [ ! -d ~/storage ];
 then
   termux-setup-storage
@@ -9,7 +7,7 @@ fi
 
 sleep 5
 
-mkdir -p /sdcard/htdocs
+pkg install php-apache -y
 
 rm $PREFIX/etc/apache2/httpd.conf
 
@@ -27,13 +25,6 @@ mv -f server.crt $PREFIX/etc/apache2/
 
 mv -f server.key $PREFIX/etc/apache2/
 
-php_info='/sdcard/htdocs/phpinfo'
-if [ ! -d $php_info ];
-then
-  mkdir $php_info
-  echo "<?php phpinfo(); ?>" > $php_info/index.php
-fi
-
 rm -f $PREFIX/bin/tamp
 
 chmod +x tamp
@@ -41,6 +32,17 @@ chmod +x tamp
 cp tamp $PREFIX/bin/
 
 pkg install mariadb composer -y
+
+mkdir -p /sdcard/htdocs
+
+cp -n .htaccess /sdcard/htdocs/
+
+php_info='/sdcard/htdocs/phpinfo'
+if [ ! -d $php_info ];
+then
+  mkdir $php_info
+  echo "<?php phpinfo(); ?>" > $php_info/index.php
+fi
 
 if [ ! -d /sdcard/htdocs/phpmyadmin ];
 then
