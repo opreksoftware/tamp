@@ -6,11 +6,13 @@ TAMP (Termux, Apache, MariaDB, PHP)
 
 TAMP is a local http web server for Android using Termux, with installation packages: Apache, MySQL/MariaDB, PHP, phpMyAdmin, & Composer.
 
+ㅤ
 ## Requirements
 
 - [Termux](https://github.com/termux/termux-app/releases/latest) **v0.118.0** or higher
 - Stable and fast internet connection
 
+ㅤ
 ## Installation
 
 1. Install & open Termux
@@ -33,6 +35,7 @@ cd ~/tamp && bash setup && cd ~/
 6. Wait until installation is complete.
 7. Enjoy!
 
+ㅤ
 ## Usage
 
 - Run `tamp start` to open url in browser.
@@ -48,6 +51,7 @@ cd ~/tamp && bash setup && cd ~/
   * `/sdcard/htdocs`
   * or `/storage/emulated/0/htdocs`
 
+ㅤ
 ## Commands
 
 - tamp start
@@ -56,6 +60,7 @@ cd ~/tamp && bash setup && cd ~/
 - tamp update
 - tamp uninstall
 
+ㅤ
 ## Credits
 
 - [Termux](https://github.com/termux/termux-app)
@@ -63,6 +68,7 @@ cd ~/tamp && bash setup && cd ~/
 - [termux-php-apache2-setup](https://github.com/gungunpriatna/termux-php-apache2-setup)
 - [termux-webserver](https://github.com/HadiKhoirudin/termux-webserver)
 
+ㅤ
 ## License
 
 TAMP is licensed under the GNU General Public License v3.0. See the [LICENSE](https://github.com/sekedus/tamp/blob/main/LICENSE) file for more details.
