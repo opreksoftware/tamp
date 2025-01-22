@@ -9,7 +9,7 @@ TAMP is a local http web server for Android using Termux, with installation pack
 ㅤ
 ## Requirements
 
-- [Termux](https://github.com/termux/termux-app/releases/latest) **v0.118.0** or higher
+- [Termux](https://github.com/termux/termux-app/releases/latest) **v0.119.0** or higher
 - Stable and fast internet connection
 
 ㅤ
@@ -26,7 +26,7 @@ termux-setup-storage
 ```
 4. Install `git` & clone this repo: 
 ```bash
-pkg install git -y && cd ~/ && git clone https://github.com/sekedus/tamp.git
+pkg install git -y && cd ~/ && git clone https://github.com/opreksoftware/tamp.git
 ```
 5. Install TAMP: 
 ```bash
